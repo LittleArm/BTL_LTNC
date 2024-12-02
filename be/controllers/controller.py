@@ -1,8 +1,10 @@
 # be/controllers/controller.py
 from flask import Blueprint, jsonify, request
 from services.service import SaoKeService
+from flask_cors import CORS
 
 sao_ke_blueprint = Blueprint('sao_ke', __name__)
+CORS(sao_ke_blueprint, origins=["http://localhost:8000", "http://localhost:3000"])  # Thêm localhost:3000 cho React
 sao_ke_service = SaoKeService()
 
 @sao_ke_blueprint.route('/search', methods=['GET'])
@@ -29,3 +31,9 @@ def search():
         return jsonify({"message": "Không tìm thấy kết quả nào."}), 404
     else:
         return jsonify(results.to_dict(orient="records"))
+
+# @sao_ke_blueprint.route('/print_data', methods=['GET'])
+# def print_data():
+#     # In toàn bộ dữ liệu
+#     data = sao_ke_service.data
+#     return jsonify(data.to_dict(orient="records"))

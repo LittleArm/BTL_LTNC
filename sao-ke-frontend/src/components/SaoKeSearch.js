@@ -8,7 +8,9 @@ const SaoKeSearch = () => {
     max_credit: '',
     min_debit: '',
     max_debit: '',
-    detail: ''
+    detail_content: '',
+    detail_name: '',
+    detail: '' // Trường này sẽ được tự động sinh ra từ hai trường trên
   });
 
   const [results, setResults] = useState([]);
@@ -17,9 +19,13 @@ const SaoKeSearch = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    
+    // Cập nhật state cho trường đang nhập
     setSearchParams(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
+      // Tự động nối các trường detail lại
+      detail: `${name === 'detail_content' ? value : prev.detail_content} ${name === 'detail_name' ? value : prev.detail_name}`.trim()
     }));
   };
 
@@ -69,13 +75,13 @@ const SaoKeSearch = () => {
 
       <div className="container mx-auto p-4">
         <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold mb-4 text-center text-red-700">
-            Tra Cứu Sao Kê
-          </h2>
+          <h1 className="text-2xl font-bold mb-4 text-center text-red-700">
+            TRA CỨU SAO KÊ
+          </h1>
           
           <form onSubmit={handleSearch} className="mb-4 grid grid-cols-2 gap-4">
             <div>
-              <label className="block mb-2">Số tiền ghi có (Credit)</label>
+              <label className="block mb-2">Số tiền truy vấn từ thẻ tín dụng (Credit)</label>
               <div className="flex gap-2">
                 <input 
                   type="number" 
@@ -97,7 +103,7 @@ const SaoKeSearch = () => {
             </div>
 
             <div>
-              <label className="block mb-2">Số tiền ghi nợ (Debit)</label>
+              <label className="block mb-2">Số tiền truy vấn từ thẻ ghi nợ (Debit)</label>
               <div className="flex gap-2">
                 <input 
                   type="number" 
@@ -118,16 +124,29 @@ const SaoKeSearch = () => {
               </div>
             </div>
 
-            <div className="col-span-2">
-              <label className="block mb-2">Chi tiết giao dịch (Nội dung & Tên)</label>
-              <input 
-                type="text" 
-                name="detail" 
-                placeholder="Nhập tên người gửi hoặc nội dung" 
-                value={searchParams.detail}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded"
-              />
+            <div className="col-span-2 grid grid-cols-2 gap-4">
+              <div>
+                <label className="block mb-2">Nội dung giao dịch</label>
+                <input 
+                  type="text" 
+                  name="detail_content" 
+                  placeholder="Nhập nội dung giao dịch" 
+                  value={searchParams.detail_content}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label className="block mb-2">Tên người gửi</label>
+                <input 
+                  type="text" 
+                  name="detail_name" 
+                  placeholder="Nhập tên người gửi" 
+                  value={searchParams.detail_name}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
             </div>
 
             <div className="col-span-2">

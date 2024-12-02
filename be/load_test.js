@@ -10,6 +10,6 @@ export let options = {
 };
 
 export default function () {
-  http.get('http://127.0.0.1:5000/api/search?detail=NGUYEN KIM HANG');
+  http.get('http://127.0.0.1:5000/api/search?detail=020097041509101543272024');
   sleep(1);
 }
