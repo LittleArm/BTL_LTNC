@@ -1,0 +1,19 @@
+version: '3'
+services:
+  frontend:
+    image: hans1510/frontend:latest  # Docker sẽ pull image này từ Docker Hub
+    ports:
+      - "3000:80"
+    networks:
+      - app-network
+
+  backend:
+    image: hans1510/backend:latest  # Docker sẽ pull image này từ Docker Hub
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
